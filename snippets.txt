@@ -1,0 +1,30 @@
+    // opencv  basit img okuma 
+    cv::Mat image;
+    image = cv::imread( "fisler/fis2.jpg" );
+    if ( !image.data )
+    {
+        printf("No image data \n");
+        return -1;
+    }
+    cv::namedWindow("Display Image", cv::WINDOW_AUTOSIZE );
+    imshow("Display Image", image);
+
+    // tesseract basit kullanım
+    tesseract::TessBaseAPI *api = new tesseract::TessBaseAPI();
+    // Initialize tesseract-ocr with English, without specifying tessdata path
+    if (api->Init(NULL, "tur")) {
+        fprintf(stderr, "Could not initialize tesseract.\n");
+        exit(1);
+    }
+
+    // Open input image with leptonica library
+    Pix *image = pixRead("fisler/fis2.jpg");
+    api->SetImage(image);
+    // Get OCR result
+    outText = api->GetUTF8Text();
+    printf("OCR output:\n%s", outText);
+
+    // Destroy used object and release memory
+    api->End();
+    delete [] outText;
+    pixDestroy(&image);
