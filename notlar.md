@@ -8,13 +8,18 @@
 
 # Notlar
  - eğitilmisle eğitilmemis hic fark etmedi
+ - eog ile fis resimleri incelenebilir
 
 # Terminoloji
  > yazar kasa fisi : sales slip
 
 # Utils
+ - ld_confif 
+ - file 
+ - imagemagick
  ```sh
   $ pkg-config --libs --cflags opencv 
  ```
  - --cflags pre-processor ve compile flaglarını dondurur 
  - --libs aynı cflags gibi bu sefer link flagslarını dondurur
+ 
