@@ -1,1 +1,3 @@
 *.exe
+/.vscode
+opencv_tesseract.code-workspace

@@ -1,13 +1,33 @@
 #kendisine sayigisi olan bir build yap
-#binaryleri baska bir klasore tasısam
+#src klasoru olustur
 
-LDFLAGS= $(shell pkg-config --libs tesseract opencv lept) # kendisine saygisi olan linker flags
+CC= g++ -Wall -Wextra
+LDFLAGS= $(shell pkg-config --libs tesseract lept opencv)
 
-cvtesseract: main.cpp
-	g++ -o cvtesseract.exe main.cpp  $(LDFLAGS)
-	#g++ -o cvtesseract main.cpp  -llept -ltesseract -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_datasets -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_line_descriptor -lopencv_optflow -lopencv_video -lopencv_plot -lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_rgbd -lopencv_viz -lopencv_surface_matching -lopencv_text -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect -lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_photo -lopencv_imgproc -lopencv_core
+#LIB=-L /usr/local/lib/*.1 
+#3INC=-I /usr/local/include/opencv4
 
 
-end_to_end_recognition: end_to_end_recognition.cpp
-		g++ -o e_e_rec end_to_end_recognition.cpp  -llept -ltesseract -lopencv_shape -lopencv_stitching -lopencv_superres -lopencv_videostab -lopencv_aruco -lopencv_bgsegm -lopencv_bioinspired -lopencv_ccalib -lopencv_datasets -lopencv_dpm -lopencv_face -lopencv_freetype -lopencv_fuzzy -lopencv_hdf -lopencv_line_descriptor -lopencv_optflow -lopencv_video -lopencv_plot -lopencv_reg -lopencv_saliency -lopencv_stereo -lopencv_structured_light -lopencv_phase_unwrapping -lopencv_rgbd -lopencv_viz -lopencv_surface_matching -lopencv_text -lopencv_ximgproc -lopencv_calib3d -lopencv_features2d -lopencv_flann -lopencv_xobjdetect -lopencv_objdetect -lopencv_ml -lopencv_xphoto -lopencv_highgui -lopencv_videoio -lopencv_imgcodecs -lopencv_photo -lopencv_imgproc -lopencv_core
+# kendine saygisi olan bir make dependecy yap
+all: cvtesseract cvedgedetect cvfindconteurs cvdetectbounding cvtreshold
 
+cvtesseract: src/main.cpp
+	$(CC) -o cvtesseract.exe src/main.cpp  $(LDFLAGS)
+
+cvedgedetect: src/canny_edge.cpp
+	$(CC) -o cvedgedetect.exe src/canny_edge.cpp  $(LDFLAGS)	
+
+cvfindconteurs: src/find_conteurs.cpp
+	$(CC) -o cvfindconteurs.exe src/find_conteurs.cpp  $(LDFLAGS)
+
+cvdetectbounding: src/detect_bounding.cpp
+	$(CC) -o cvdetectbounding.exe src/detect_bounding.cpp  $(LDFLAGS)		
+
+cvtreshold: src/threshold.cpp
+	$(CC) -o cvtreshold.exe src/threshold.cpp  $(LDFLAGS)		
+
+cveetextdetect: src/end_to_end_recognition.cpp
+	$(CC) -o cveetextdetect.exe src/end_to_end_recognition.cpp  $(LDFLAGS)		
+
+deneme: src/cv_fispreprocess.cpp
+	$(CC) -o cvfispreprocess.exe src/cv_fispreprocess.cpp  $(LDFLAGS)		
