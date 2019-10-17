@@ -59,17 +59,15 @@ std::string tsrctWrapper::getImgOCRString_leptonica(const char *_sImgPath){
     return sOutText;
 }
 
-/*
+
 int tsrctWrapper::writeOCRoutputToFile(const char* _sFileName,const char* _sImgPath){
-    // try escape
     std::string sOCRout = getImgOCRString_leptonica(_sImgPath);
-    //cpp da dosya islemleri nasil yapılıyor
     std::ofstream out(_sFileName);
     out << sOCRout;
     out.close();
     return 0;
 }
-*/
+
 
 tsrctWrapper::~tsrctWrapper()
 {
@@ -98,31 +96,18 @@ cvfis::~cvfis()
 int main()
 {
     // opencv deki tesseractı kullan ve sonucları oncekliler ile karsılastir 
+    // opencv icin ayrı dosya olustur
     // belirgin bir fark olmaszsa opencvninkini kullan 
-    // opecv icin resmi isleyen ve ocr'a sokan bir wrapper class yaz
-    const char *s_imgPath = "fisler/fis2.jpg";
+    // tesseract apisini incele 
 
-    cv::Mat m_image;
-    m_image = cv::imread(s_imgPath, 1); //demekki imread Mat objesi donuyor
+    //tesseract::TessBaseAPI* TbApi = new tesseract::TessBaseAPI();
     
-    cv::Mat m_grayImage;
-    cv::cvtColor(m_image, m_grayImage, cv::COLOR_BGR2GRAY);
-
-    double d_thresh = 50;
-    double d_maxValue = 170;
-
-    cv::Mat m_filteredImg;
-
+    const char *s_imgPath = "fisler/cropped/fis1b.jpg";
+    tsrctWrapper *tWrapperTrainded = new tsrctWrapper("tesseract/tesseract-trainded/"); 
+  
+    tWrapperTrainded->writeOCRoutputToFile("tesseract-output/trained.txt",s_imgPath);
+    delete tWrapperTrainded;
     
-    cv::adaptiveThreshold(m_grayImage,m_filteredImg,180,cv::ADAPTIVE_THRESH_MEAN_C,cv::THRESH_BINARY,11,12);
-    
-    cv::namedWindow("gray image",cv::WINDOW_NORMAL);
-    cv::resizeWindow("gray image",750,600);
-    cv::imshow("gray image",m_filteredImg);
-    
-    
-    cv::waitKey(0);
-
     return 0;
 }
 

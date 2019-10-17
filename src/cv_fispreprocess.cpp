@@ -19,6 +19,8 @@ public:
     ~fpp();
     void inp2gray();
     void showScaledOut();
+    void showScaledInp();
+
     void addBorder();
 };
 
@@ -47,6 +49,12 @@ void fpp::showScaledOut(){
     cv::namedWindow("out", cv::WINDOW_NORMAL);
     cv::resizeWindow("out",1200,800);
     cv::imshow("out", m_outImg);
+    cv::waitKey(0);
+}
+void fpp::showScaledInp(){
+    cv::namedWindow("out", cv::WINDOW_NORMAL);
+    cv::resizeWindow("out",1200,800);
+    cv::imshow("out", m_inpImg);
     cv::waitKey(0);
 }
 
@@ -79,28 +87,27 @@ int main(int argc, char const *argv[]) //argv: argument vector
     // !!! NELER YAPACAGINI DUSUN
     // best caseler uzerinden roi olusturup duzelt
     // sonra optimizasyona gec 
+     
+    // resize image roiyi bulduktan sonra 1.5 carpmak 
+    // resmin boyutunu kucultmek basarimi arttiriyor
+    cv::resize(f->m_inpImg,f->m_inpImg,cv::Size(),0.75,0.75);
+
+    double alpha = 2; // simple contrast control
+    int beta = -20; //simple brightness control
+
+    //trackbar isini ayrı dosyada yap
+    f->m_inpImg.convertTo(f->m_inpImg,-1,alpha,beta);
+    f->showScaledInp();
+    cv::waitKey(0);
     
-    cv::Mat tmp;
     cv::bilateralFilter( f->m_inpImg,f->m_outImg,9,75,75 );
-    
-    //track barlı cozumler dusun
     f->inp2gray();
 
     cv::adaptiveThreshold( f->m_outImg,f->m_outImg,255,cv::ADAPTIVE_THRESH_GAUSSIAN_C,cv::THRESH_BINARY,115,4);
-    //f->showScaledOut();
-
     cv::medianBlur(f->m_outImg,f->m_outImg,11);
     f->addBorder();
     cv::Canny(f->m_outImg,f->m_outImg,200,250);
 
-    //find conteurs 
-
-    f->showScaledOut();
-    
-    cv::namedWindow("bilateralfilter",cv::WINDOW_NORMAL);
-    cv::resizeWindow("bilateralfilter",1000,750);
-    cv::imshow("bilateralfilter",tmp);
-    
     f->showScaledOut();
     cv::waitKey(0);
     

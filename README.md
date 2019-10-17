@@ -5,9 +5,6 @@
 ### Fişi tespit etmek
     > canny edge detection on blured image ?
     > kenarları tespit edip resmi cropla ?
-    > croplandan alanda text detection ile roileri olustur  
-    > text 
-### görüntüdeki roileri (fisin icindeki satırlar)
 
 ## Kullanılan araçlar (Debian 10 Buster)
  - C++ 
