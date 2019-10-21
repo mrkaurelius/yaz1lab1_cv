@@ -2,9 +2,16 @@
 
 > Yazılım Laboratuvarı 1. Projesi Görüntü İşleme Kısmı 
 ## Problemler
+### OCR'nin kalitesini arttırmak
+ - DPI duzenleme
+ - Gurultu azaltma
+ - Binarisation
+ - Deskewing
+ - Borders
+
 ### Fişi tespit etmek
-    > canny edge detection on blured image ?
-    > kenarları tespit edip resmi cropla ?
+ - canny edge detection on blured image ?
+ - kenarları tespit edip resmi cropla ?
 
 ## Kullanılan araçlar (Debian 10 Buster)
  - C++ 

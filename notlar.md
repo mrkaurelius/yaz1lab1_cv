@@ -17,7 +17,8 @@
  > ocr icin zemin beyaz karatler siyah olmalı, arka planın renginin ocr'a etkisi 
  - satırların duzluguun ocr'ın cıktısına onemi, bunu nasil test edebiliriz?
  - t4esseractin apisin incele
- - 300 dpi ?
+
+ ## regex
 
  ## C++
  - std veri yapılarını kullanmaya calis mesaha unordered hash map

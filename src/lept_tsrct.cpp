@@ -20,7 +20,7 @@ public:
     tsrctWrapper();
     tsrctWrapper(const char* _sTestDataPath);
     ~tsrctWrapper();
-    std::string getImgOCRString_leptonica(const char* _sImgPath);
+    std::string getImgOCRString(const char* _sImgPath);
     int writeOCRoutputToFile(const char* _sFileName,const char* _sImgPath);
 
     //std::vector<std::string> vImgFilePaths;
@@ -48,7 +48,7 @@ tsrctWrapper::tsrctWrapper(const char* _sTestDataPath)
     }
 }
 
-std::string tsrctWrapper::getImgOCRString_leptonica(const char *_sImgPath){
+std::string tsrctWrapper::getImgOCRString(const char *_sImgPath){
     //Open input image with leptonica libary
     // try escape
     Pix *image = pixRead(_sImgPath);
@@ -61,7 +61,7 @@ std::string tsrctWrapper::getImgOCRString_leptonica(const char *_sImgPath){
 
 
 int tsrctWrapper::writeOCRoutputToFile(const char* _sFileName,const char* _sImgPath){
-    std::string sOCRout = getImgOCRString_leptonica(_sImgPath);
+    std::string sOCRout = getImgOCRString(_sImgPath);
     std::ofstream out(_sFileName);
     out << sOCRout;
     out.close();
@@ -75,39 +75,32 @@ tsrctWrapper::~tsrctWrapper()
     TbApi->End();
 }
 
-class cvfis
-{
-private:
-    /* data */
-public:
-    cvfis(/* args */);
-    ~cvfis();
-};
 
-cvfis::cvfis(/* args */)
-{
-}
-
-cvfis::~cvfis()
-{
-}
-
-
-int main()
-{
-    // opencv deki tesseractı kullan ve sonucları oncekliler ile karsılastir 
-    // opencv icin ayrı dosya olustur
-    // belirgin bir fark olmaszsa opencvninkini kullan 
+int main(int argc, char const *argv[]){
+    // bunu kullanacagim
     // tesseract apisini incele 
 
     //tesseract::TessBaseAPI* TbApi = new tesseract::TessBaseAPI();
     
-    const char *s_imgPath = "fisler/cropped/fis1b.jpg";
-    tsrctWrapper *tWrapperTrainded = new tsrctWrapper("tesseract/tesseract-trainded/"); 
-  
-    tWrapperTrainded->writeOCRoutputToFile("tesseract-output/trained.txt",s_imgPath);
-    delete tWrapperTrainded;
+    if (argc != 2)
+    {
+        std::cout << "hatalı kullanım" << std::endl;
+    }
     
+    // 2 tane api cagir biri isimler icin biri fiyatlar icin
+
+    const char *s_imgPath = argv[1];
+    tsrctWrapper *tw_name = new tsrctWrapper("tesseract/tesseract-trainded/"); 
+    tsrctWrapper *tw_number = new tsrctWrapper(); 
+
+    std::cout << "name" << std::endl;
+    std::cout << tw_name->getImgOCRString(s_imgPath) << std::endl;
+    std::cout << "number" << std::endl;
+    std::cout << tw_number->getImgOCRString(s_imgPath) << std::endl;
+
+    delete tw_name;
+    delete tw_number;
+
     return 0;
 }
 
@@ -123,8 +116,8 @@ int main()
     delete tWrapperTrainded;
     */
     /*
-    std::string outText = tWrapper->getImgOCRString_leptonica("fisler/fis.jpg");
-    std::string outTextTrainded = tWrapperTrainded->getImgOCRString_leptonica("fisler/fis.jpg");
+    std::string outText = tWrapper->getImgOCRString("fisler/fis.jpg");
+    std::string outTextTrainded = tWrapperTrainded->getImgOCRString("fisler/fis.jpg");
     std::cout << outText << std::endl;
     std::cout << outTextTrainded << std::endl;
     */

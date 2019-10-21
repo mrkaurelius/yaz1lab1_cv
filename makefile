@@ -8,13 +8,19 @@ LDFLAGS= $(shell pkg-config --libs tesseract lept opencv)
 #3INC=-I /usr/local/include/opencv4
 
 # kendine saygisi olan bir make dependecy yap
-all: lepttsrct cvedgedetect 
+all: lepttsrct cvtsrct cvfpp exlepttsrct
 
 lepttsrct: src/lept_tsrct.cpp
-	$(CC) -o lpttsrct.exe src/lept_tsrct.cpp  $(LDFLAGS)
+	$(CC) -o lepttsrct.exe src/lept_tsrct.cpp  $(LDFLAGS)
 
-fpp: src/cv_fispreprocess.cpp
-	$(CC) -o fpp.exe src/cv_fispreprocess.cpp  $(LDFLAGS)		
+exlepttsrct: src/lept_tsrct_ex.cpp
+	$(CC) -o exlepttsrct.exe src/lept_tsrct_ex.cpp  $(LDFLAGS)
+
+cvtsrct: src/cv_tsrct.cpp
+	$(CC) -o cvtsrct.exe src/cv_tsrct.cpp  $(LDFLAGS)	
+
+cvfpp: src/cv_fpp.cpp
+	$(CC) -o cvfpp.exe src/cv_fpp.cpp  $(LDFLAGS)		
 
 cvedgedetect: src/examples/canny_edge.cpp
 	$(CC) -o cvedgedetect.exe src/examples/canny_edge.cpp  $(LDFLAGS)	
